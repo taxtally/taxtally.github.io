@@ -176,14 +176,20 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
 
               {/* Pay Frequency Switcher */}
               <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                <label id="pay-frequency-label" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
                   {t.payFrequency}
                 </label>
-                <div className="grid grid-cols-4 gap-1.5 p-1 bg-slate-100 dark:bg-[#092328] rounded-xl border border-slate-200/80 dark:border-[#12544F]">
+                <div
+                  role="radiogroup"
+                  aria-labelledby="pay-frequency-label"
+                  className="grid grid-cols-4 gap-1.5 p-1 bg-slate-100 dark:bg-[#092328] rounded-xl border border-slate-200/80 dark:border-[#12544F]"
+                >
                   {(['annual', 'monthly', 'biweekly', 'hourly'] as PayFrequency[]).map((freq) => (
                     <button
                       key={freq}
                       type="button"
+                      role="radio"
+                      aria-checked={frequency === freq}
                       onClick={() => setFrequency(freq)}
                       className={`py-2 px-2 text-xs font-semibold rounded-lg capitalize transition-all ${
                         frequency === freq
@@ -294,12 +300,18 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
               <>
                 {/* Filing Status */}
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                  <label id="filing-status-label" className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
                     {t.filingStatus}
                   </label>
-                  <div className="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 dark:bg-[#092328] rounded-xl border border-slate-200/80 dark:border-[#12544F]">
+                  <div
+                    role="radiogroup"
+                    aria-labelledby="filing-status-label"
+                    className="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 dark:bg-[#092328] rounded-xl border border-slate-200/80 dark:border-[#12544F]"
+                  >
                     <button
                       type="button"
+                      role="radio"
+                      aria-checked={filingStatus === 'single'}
                       onClick={() => setFilingStatus('single')}
                       className={`py-2 px-1.5 text-xs font-semibold rounded-lg truncate transition-all ${
                         filingStatus === 'single'
@@ -311,6 +323,8 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
                     </button>
                     <button
                       type="button"
+                      role="radio"
+                      aria-checked={filingStatus === 'married'}
                       onClick={() => setFilingStatus('married')}
                       className={`py-2 px-1.5 text-xs font-semibold rounded-lg truncate transition-all ${
                         filingStatus === 'married'
@@ -322,6 +336,8 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
                     </button>
                     <button
                       type="button"
+                      role="radio"
+                      aria-checked={filingStatus === 'head_of_household'}
                       onClick={() => setFilingStatus('head_of_household')}
                       className={`py-2 px-1.5 text-xs font-semibold rounded-lg truncate transition-all ${
                         filingStatus === 'head_of_household'
@@ -551,7 +567,14 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
             </div>
 
             {/* Stacked Progress Bar */}
-            <div className="h-4 w-full bg-slate-100 dark:bg-[#12544F]/40 rounded-full overflow-hidden flex shadow-inner">
+            <div
+              role="progressbar"
+              aria-label={t.visualBreakdown}
+              aria-valuenow={Math.round(netPercent)}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              className="h-4 w-full bg-slate-100 dark:bg-[#12544F]/40 rounded-full overflow-hidden flex shadow-inner"
+            >
               <div
                 style={{ width: `${Math.min(100, Math.max(0, netPercent))}%` }}
                 className="bg-[#2A835F] transition-all duration-300 relative group"
@@ -579,9 +602,13 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
 
           {/* TABBED DETAILS: Granular Paycheck Schedule vs. Tax Bracket Breakdown */}
           <div className="rounded-2xl bg-white dark:bg-[#092328] border border-slate-200 dark:border-[#12544F] shadow-xs overflow-hidden">
-            <div className="flex border-b border-slate-200 dark:border-[#12544F]">
+            <div role="tablist" aria-label="Tax Breakdown View" className="flex border-b border-slate-200 dark:border-[#12544F]">
               <button
+                id="tab-schedule"
+                role="tab"
                 type="button"
+                aria-selected={activeTab === 'schedule'}
+                aria-controls="panel-schedule"
                 onClick={() => setActiveTab('schedule')}
                 className={`flex-1 py-3 px-4 text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer ${
                   activeTab === 'schedule'
@@ -593,7 +620,11 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
                 {t.periodSchedule}
               </button>
               <button
+                id="tab-brackets"
+                role="tab"
                 type="button"
+                aria-selected={activeTab === 'brackets'}
+                aria-controls="panel-brackets"
                 onClick={() => setActiveTab('brackets')}
                 className={`flex-1 py-3 px-4 text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer ${
                   activeTab === 'brackets'
@@ -608,8 +639,9 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
 
             <div className="p-4 sm:p-5">
               {activeTab === 'schedule' ? (
-                <div className="overflow-x-auto">
+                <div id="panel-schedule" role="tabpanel" aria-labelledby="tab-schedule" className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
+                    <caption className="sr-only">Annual, monthly, bi-weekly and hourly paycheck breakdown schedule</caption>
                     <thead>
                       <tr className="border-b border-slate-200 dark:border-[#12544F] text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-wider">
                         <th className="pb-2.5">{t.periodCol}</th>
@@ -637,7 +669,7 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
                   </table>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div id="panel-brackets" role="tabpanel" aria-labelledby="tab-brackets" className="space-y-3">
                   {result.bracketBreakdown.length === 0 ? (
                     <div className="py-6 text-center text-xs text-slate-500">
                       All earnings fall within your tax-free allowance ({formatCurrency(result.deductionApplied, currentPreset.currencySymbol)}). No income tax owed!
@@ -645,6 +677,7 @@ Calculated privately with TaxTally: https://taxtally.github.io`;
                   ) : (
                     <div className="overflow-x-auto">
                       <table className="w-full text-left text-xs">
+                        <caption className="sr-only">Progressive income tax tier brackets and calculated tax liabilities</caption>
                         <thead>
                           <tr className="border-b border-slate-200 dark:border-[#12544F] text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-wider">
                             <th className="pb-2.5">{t.bracketCol}</th>

@@ -58,26 +58,30 @@ export interface TranslationDictionary {
   }[];
   footerDisclaimer: string;
   builtForPrivacy: string;
+  breadcrumbHome: string;
+  breadcrumbCalculator: string;
 }
 
-export const LOCALES: Record<SupportedLocale, { code: SupportedLocale; name: string; flag: string }> = {
-  en: { code: 'en', name: 'English', flag: '🇺🇸' },
-  es: { code: 'es', name: 'Español', flag: '🇪🇸' },
-  pt: { code: 'pt', name: 'Português', flag: '🇧🇷' },
-  de: { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  fr: { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  ja: { code: 'ja', name: '日本語', flag: '🇯🇵' },
+export const LOCALES: Record<SupportedLocale, { code: SupportedLocale; name: string; flag: string; ogLocale: string }> = {
+  en: { code: 'en', name: 'English', flag: '🇺🇸', ogLocale: 'en_US' },
+  es: { code: 'es', name: 'Español', flag: '🇪🇸', ogLocale: 'es_ES' },
+  pt: { code: 'pt', name: 'Português', flag: '🇧🇷', ogLocale: 'pt_BR' },
+  de: { code: 'de', name: 'Deutsch', flag: '🇩🇪', ogLocale: 'de_DE' },
+  fr: { code: 'fr', name: 'Français', flag: '🇫🇷', ogLocale: 'fr_FR' },
+  ja: { code: 'ja', name: '日本語', flag: '🇯🇵', ogLocale: 'ja_JP' },
 };
 
 export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
   en: {
     siteTitle: 'TaxTally | Free Private Income Tax & Salary Calculator',
     siteTagline: 'Free, instant, 100% private income tax and salary take-home calculator.',
-    metaDescription: 'Calculate your true take-home salary and income tax liability instantly. 100% private client-side browser calculator with progressive brackets, deductions, and zero server storage.',
+    metaDescription: 'Calculate your take-home salary and income tax instantly. 100% private in-browser calculator with progressive tax brackets, deductions, and zero server storage.',
     supportDeveloper: 'Support the Developer',
     themeToggle: 'Toggle Theme',
     languageSelect: 'Language',
     privacyBadge: '🔒 100% Client-Side & Private — Zero Data Leaves Your Device',
+    breadcrumbHome: 'Home',
+    breadcrumbCalculator: 'Tax & Salary Calculator',
     step1Title: 'Step 1: Your Earnings',
     step1Desc: 'Enter your gross earnings and payment interval.',
     step2Title: 'Step 2: Tax Regime & Deductions',
@@ -155,6 +159,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     themeToggle: 'Cambiar Tema',
     languageSelect: 'Idioma',
     privacyBadge: '🔒 100% En el Navegador y Privado — Ningún dato sale de tu dispositivo',
+    breadcrumbHome: 'Inicio',
+    breadcrumbCalculator: 'Calculadora de Impuestos',
     step1Title: 'Paso 1: Tus Ingresos',
     step1Desc: 'Introduce tus ingresos brutos y la frecuencia de cobro.',
     step2Title: 'Paso 2: Régimen Fiscal y Deducciones',
@@ -232,6 +238,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     themeToggle: 'Alternar Tema',
     languageSelect: 'Idioma',
     privacyBadge: '🔒 100% no Navegador e Privado — Seus dados nunca saem do aparelho',
+    breadcrumbHome: 'Início',
+    breadcrumbCalculator: 'Calculadora de Impostos',
     step1Title: 'Passo 1: Seus Ganhos',
     step1Desc: 'Informe sua renda bruta e a frequência de recebimento.',
     step2Title: 'Passo 2: Regime Tributário e Deduções',
@@ -309,6 +317,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     themeToggle: 'Design umschalten',
     languageSelect: 'Sprache',
     privacyBadge: '🔒 100% Im Browser & Privat — Keine Daten verlassen Ihr Gerät',
+    breadcrumbHome: 'Startseite',
+    breadcrumbCalculator: 'Gehaltsrechner',
     step1Title: 'Schritt 1: Ihr Einkommen',
     step1Desc: 'Geben Sie Ihr Bruttoeinkommen und den Zahlungsrhythmus ein.',
     step2Title: 'Schritt 2: Steuertarif & Freibeträge',
@@ -386,6 +396,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     themeToggle: 'Changer de Thème',
     languageSelect: 'Langue',
     privacyBadge: '🔒 100% Dans le Navigateur & Privé — Aucune donnée ne quitte votre appareil',
+    breadcrumbHome: 'Accueil',
+    breadcrumbCalculator: 'Calculateur de Salaire & Impôts',
     step1Title: 'Étape 1 : Vos Revenus',
     step1Desc: 'Saisissez vos revenus bruts et la fréquence de versement.',
     step2Title: 'Étape 2 : Régime Fiscal & Déductions',
@@ -463,6 +475,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     themeToggle: 'テーマ切り替え',
     languageSelect: '言語',
     privacyBadge: '🔒 100% ブラウザ完結・完全プライベート — データは端末外に送信されません',
+    breadcrumbHome: 'ホーム',
+    breadcrumbCalculator: '所得税・給与計算機',
     step1Title: 'ステップ 1: 収入の入力',
     step1Desc: '額面収入と支払いサイクルを入力します。',
     step2Title: 'ステップ 2: 税制区分と控除',

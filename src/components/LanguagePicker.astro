@@ -20,6 +20,7 @@ const getLocaleUrl = (code: SupportedLocale) => {
     type="button"
     aria-haspopup="true"
     aria-expanded="false"
+    aria-controls="language-dropdown"
     aria-label="Select Language"
     title={`Current Language: ${current.name}`}
     class="inline-flex items-center justify-center gap-1.5 p-2 lg:px-3 lg:py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-[#8BBB92] hover:text-[#092328] dark:hover:text-white bg-slate-100/80 dark:bg-[#12544F]/40 border border-slate-200/80 dark:border-[#12544F] hover:bg-slate-200/60 dark:hover:bg-[#12544F]/70 transition-colors cursor-pointer"
@@ -33,12 +34,16 @@ const getLocaleUrl = (code: SupportedLocale) => {
 
   <div
     id="language-dropdown"
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="language-menu-btn"
     class="hidden absolute right-0 mt-2 w-36 rounded-xl bg-white dark:bg-[#092328] border border-slate-200 dark:border-[#12544F] shadow-lg py-1.5 z-50 text-xs focus:outline-hidden"
   >
     {
       Object.values(LOCALES).map((loc) => (
         <a
           href={getLocaleUrl(loc.code)}
+          role="menuitem"
           class={`flex items-center justify-between px-3 py-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-[#12544F]/50 transition-colors ${
             loc.code === currentLocale ? 'font-bold text-[#2A835F] dark:text-[#8BBB92] bg-[#8BBB92]/10 dark:bg-[#12544F]/60' : ''
           }`}

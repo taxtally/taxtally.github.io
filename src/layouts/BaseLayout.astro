@@ -3,6 +3,7 @@ import SeoHead from '../components/SeoHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FaqSection from '../components/FaqSection.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { TRANSLATIONS } from '../i18n/translations';
 import type { SupportedLocale } from '../types/tax';
 import '../styles/global.css';
@@ -50,11 +51,22 @@ const t = TRANSLATIONS[currentLocale] || TRANSLATIONS.en;
     <SeoHead currentLocale={currentLocale} />
   </head>
   <body class="min-h-screen bg-[#F8FAFC] dark:bg-[#092328] text-[#092328] dark:text-[#F8FAFC] antialiased selection:bg-[#2A835F] selection:text-white transition-colors duration-200">
+    <!-- Accessibility Skip Link -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#2A835F] focus:text-white focus:rounded-lg focus:shadow-lg focus:font-semibold text-xs transition-transform"
+    >
+      Skip to main content
+    </a>
+
     {/* Sticky Navbar */}
     <Header currentLocale={currentLocale} />
 
+    {/* Accessible Breadcrumbs Navigation */}
+    <Breadcrumbs currentLocale={currentLocale} />
+
     {/* Hero Section */}
-    <div class="relative overflow-hidden pt-8 pb-4 sm:pt-12 sm:pb-6 text-center px-4">
+    <div class="relative overflow-hidden pt-6 pb-4 sm:pt-10 sm:pb-6 text-center px-4">
       {/* Background radial glow using brand colors */}
       <div class="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#2A835F]/15 dark:bg-[#12544F]/35 rounded-full blur-3xl" />
 
@@ -75,7 +87,7 @@ const t = TRANSLATIONS[currentLocale] || TRANSLATIONS.en;
     </div>
 
     {/* Main Calculator Slot */}
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+    <main id="main-content" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6" tabindex="-1">
       <slot />
     </main>
 

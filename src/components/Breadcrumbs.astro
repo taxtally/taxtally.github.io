@@ -1,0 +1,48 @@
+---
+import { TRANSLATIONS, LOCALES } from '../i18n/translations';
+import type { SupportedLocale } from '../types/tax';
+
+interface Props {
+  currentLocale: SupportedLocale;
+}
+
+const { currentLocale } = Astro.props;
+const t = TRANSLATIONS[currentLocale] || TRANSLATIONS.en;
+const currentLoc = LOCALES[currentLocale] || LOCALES.en;
+const siteUrl = 'https://taxtally.github.io';
+const canonicalUrl = currentLocale === 'en' ? `${siteUrl}/` : `${siteUrl}/${currentLocale}/`;
+---
+
+<nav aria-label="Breadcrumb" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-1">
+  <ol class="flex items-center flex-wrap gap-1.5 text-xs text-slate-500 dark:text-slate-400" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" class="flex items-center">
+      <a href="/" itemprop="item" class="hover:text-[#2A835F] dark:hover:text-[#8BBB92] transition-colors flex items-center gap-1 font-medium">
+        <span itemprop="name">{t.breadcrumbHome}</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+
+    {currentLocale !== 'en' && (
+      <li class="flex items-center gap-1.5" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <svg class="w-3.5 h-3.5 text-slate-400 dark:text-slate-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <a href={canonicalUrl} itemprop="item" class="hover:text-[#2A835F] dark:hover:text-[#8BBB92] transition-colors font-medium">
+          <span itemprop="name">{currentLoc.name}</span>
+        </a>
+        <meta itemprop="position" content="2" />
+      </li>
+    )}
+
+    <li class="flex items-center gap-1.5" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <svg class="w-3.5 h-3.5 text-slate-400 dark:text-slate-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+      <span class="text-[#2A835F] dark:text-[#8BBB92] font-semibold" itemprop="name">
+        {t.breadcrumbCalculator}
+      </span>
+      <meta itemprop="item" content={canonicalUrl} />
+      <meta itemprop="position" content={currentLocale !== 'en' ? '3' : '2'} />
+    </li>
+  </ol>
+</nav>

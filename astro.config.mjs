@@ -7,15 +7,34 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://taxtally.github.io',
-  integrations: [react(), sitemap()],
+  trailingSlash: 'always',
+  integrations: [
+    react(),
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en',
+          es: 'es',
+          pt: 'pt',
+          de: 'de',
+          fr: 'fr',
+          ja: 'ja',
+        },
+      },
+      changefreq: 'weekly',
+      priority: 1.0,
+      lastmod: new Date(),
+    }),
+  ],
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'es', 'pt', 'de', 'fr', 'ja'],
     routing: {
-      prefixDefaultLocale: false
-    }
+      prefixDefaultLocale: false,
+    },
   },
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+  },
 });

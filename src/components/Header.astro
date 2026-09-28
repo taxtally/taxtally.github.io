@@ -33,7 +33,7 @@ const homeUrl = currentLocale === 'en' ? '/' : `/${currentLocale}/`;
     </a>
 
     {/* Right Controls: Icon-only on mobile & tablet (< lg), full text on desktop (lg+) */}
-    <div class="flex items-center gap-1.5 sm:gap-2 lg:gap-3">
+    <nav aria-label="Main Navigation" class="flex items-center gap-1.5 sm:gap-2 lg:gap-3">
       {/* "Support the Developer" - Icon only on mobile/tablet, full label on desktop */}
       <a
         href="https://buymeacoffee.com/kisharadilz"
@@ -52,6 +52,6 @@ const homeUrl = currentLocale === 'en' ? '/' : `/${currentLocale}/`;
 
       {/* Light/Dark Mode Switcher */}
       <ThemeToggle />
-    </div>
+    </nav>
   </div>
 </header>

@@ -30,9 +30,9 @@
 - **📋 1-Click Productivity**: Instant "Copy Summary" to clipboard and clean "Print / Save PDF" formatting.
 - **🔍 Strict Technical SEO**:
   - `<meta property="og:site_name" content="TaxTally">`
-  - Automated `sitemap-index.xml` and `robots.txt`
+  - Automated `sitemap-index.xml` with in-sitemap hreflang and `robots.txt`
   - Canonical & Hreflang alternates across all locales
-  - Native JSON-LD Structured Data: `WebSite`, `WebApplication`, `SoftwareApplication` (FinancialApplication), and `FAQPage`.
+  - Native JSON-LD Structured Data: `WebSite` (with Organization publisher), `WebApplication`, `BreadcrumbList`, and `FAQPage`.
 
 ---
 
