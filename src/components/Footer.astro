@@ -1,0 +1,54 @@
+---
+import { TRANSLATIONS } from '../i18n/translations';
+import type { SupportedLocale } from '../types/tax';
+
+interface Props {
+  currentLocale: SupportedLocale;
+}
+
+const { currentLocale } = Astro.props;
+const t = TRANSLATIONS[currentLocale] || TRANSLATIONS.en;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="w-full border-t border-slate-200 dark:border-[#12544F] bg-white/60 dark:bg-[#092328]/90 mt-16 transition-colors">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Brand & Privacy Note */}
+      <div class="flex items-center gap-2 text-slate-800 dark:text-slate-200">
+        <span class="font-bold text-sm text-[#092328] dark:text-white">TaxTally</span>
+        <span class="text-slate-300 dark:text-[#12544F]">•</span>
+        <span class="text-xs text-slate-500 dark:text-[#8BBB92]/80">{t.builtForPrivacy}</span>
+      </div>
+
+      {/* Social / External Links */}
+      <div class="flex items-center gap-4 text-xs font-medium text-slate-600 dark:text-slate-300">
+        <a
+          href="https://buymeacoffee.com/kisharadilz"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-amber-500 transition-colors flex items-center gap-1"
+        >
+          <span>☕</span>
+          <span>{t.supportDeveloper}</span>
+        </a>
+        <a
+          href="https://github.com/taxtally/taxtally.github.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-[#2A835F] dark:hover:text-[#8BBB92] transition-colors"
+        >
+          GitHub
+        </a>
+      </div>
+    </div>
+
+    {/* Disclaimer */}
+    <div class="pt-4 border-t border-slate-100 dark:border-[#12544F]/60 text-[11px] leading-relaxed text-slate-400 dark:text-slate-400 text-center sm:text-left">
+      <p>{t.footerDisclaimer}</p>
+      <p class="mt-2 text-slate-400 dark:text-[#8BBB92]/60">
+        © {currentYear} TaxTally. Open source under MIT License. All calculations performed client-side.
+      </p>
+    </div>
+  </div>
+</footer>

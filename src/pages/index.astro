@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { TaxCalculator } from '../components/TaxCalculator';
+---
+
+<BaseLayout currentLocale="en">
+  <TaxCalculator client:load currentLocale="en" />
+</BaseLayout>

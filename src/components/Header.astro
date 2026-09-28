@@ -1,0 +1,57 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import LanguagePicker from './LanguagePicker.astro';
+import { TRANSLATIONS } from '../i18n/translations';
+import type { SupportedLocale } from '../types/tax';
+
+interface Props {
+  currentLocale: SupportedLocale;
+}
+
+const { currentLocale } = Astro.props;
+const t = TRANSLATIONS[currentLocale] || TRANSLATIONS.en;
+const homeUrl = currentLocale === 'en' ? '/' : `/${currentLocale}/`;
+---
+
+<header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/90 dark:bg-[#092328]/90 border-b border-slate-200/80 dark:border-[#12544F] transition-colors">
+  <div class="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+    {/* Brand Logo */}
+    <a href={homeUrl} class="flex items-center gap-2 group focus:outline-hidden shrink-0">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#12544F] to-[#2A835F] flex items-center justify-center text-white shadow-xs shadow-[#2A835F]/20 group-hover:scale-105 transition-transform">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-base font-extrabold tracking-tight text-[#092328] dark:text-white group-hover:text-[#2A835F] dark:group-hover:text-[#8BBB92] transition-colors">
+          TaxTally
+        </span>
+        <span class="hidden sm:block text-[10px] -mt-1 font-medium text-slate-400 dark:text-[#8BBB92]/70">
+          Private Tax Engine
+        </span>
+      </div>
+    </a>
+
+    {/* Right Controls: Icon-only on mobile & tablet (< lg), full text on desktop (lg+) */}
+    <div class="flex items-center gap-1.5 sm:gap-2 lg:gap-3">
+      {/* "Support the Developer" - Icon only on mobile/tablet, full label on desktop */}
+      <a
+        href="https://buymeacoffee.com/kisharadilz"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="buy-me-coffee-btn inline-flex items-center justify-center gap-1.5 p-2 lg:px-3.5 lg:py-1.5 rounded-full text-xs font-bold text-amber-950 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-300 hover:from-amber-400 hover:to-amber-500 shadow-xs shadow-amber-500/20 hover:shadow-md hover:shadow-amber-500/30 hover:scale-105 active:scale-95 transition-all"
+        title="Support the Developer - buymeacoffee.com/kisharadilz"
+        aria-label="Support the Developer"
+      >
+        <span class="text-base sm:text-sm">☕</span>
+        <span class="hidden lg:inline">{t.supportDeveloper}</span>
+      </a>
+
+      {/* Language Selector - Flag only on mobile/tablet, Flag + Name on desktop */}
+      <LanguagePicker currentLocale={currentLocale} />
+
+      {/* Light/Dark Mode Switcher */}
+      <ThemeToggle />
+    </div>
+  </div>
+</header>

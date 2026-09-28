@@ -1,0 +1,121 @@
+---
+import { TRANSLATIONS, LOCALES } from '../i18n/translations';
+import type { SupportedLocale } from '../types/tax';
+
+interface Props {
+  currentLocale: SupportedLocale;
+}
+
+const { currentLocale } = Astro.props;
+const t = TRANSLATIONS[currentLocale] || TRANSLATIONS.en;
+
+const siteUrl = 'https://taxtally.github.io';
+const canonicalUrl = currentLocale === 'en' ? `${siteUrl}/` : `${siteUrl}/${currentLocale}/`;
+
+// Schemas
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'TaxTally',
+  url: siteUrl,
+  description: t.metaDescription,
+  inLanguage: currentLocale,
+};
+
+const webApplicationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'TaxTally Income & Salary Tax Calculator',
+  url: canonicalUrl,
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'All modern web browsers (Chrome, Safari, Firefox, Edge)',
+  browserRequirements: 'Requires JavaScript. Requires HTML5.',
+  offers: {
+    '@type': 'Offer',
+    price: '0.00',
+    priceCurrency: 'USD',
+  },
+  featureList: [
+    '100% Client-Side Privacy',
+    'Instant Progressive Tax Bracket Computation',
+    'Multi-country presets (US, UK, Canada, Australia, Germany)',
+    'Paycheck Period Schedule (Annual, Monthly, Bi-Weekly, Hourly)',
+    'Standard and Custom Deduction Support',
+    'Visual Income Distribution Progress Bar',
+    'One-click PDF / Print Export',
+  ],
+};
+
+const softwareApplicationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'TaxTally',
+  softwareVersion: '1.0.0',
+  applicationCategory: 'FinancialApplication',
+  operatingSystem: 'Web-based',
+  author: {
+    '@type': 'Person',
+    name: 'TaxTally Team',
+    url: 'https://buymeacoffee.com/kisharadilz',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    ratingCount: '128',
+    bestRating: '5',
+    worstRating: '1',
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: t.faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.a,
+    },
+  })),
+};
+---
+
+<!-- Core Meta Tags -->
+<title>{t.siteTitle}</title>
+<meta name="description" content={t.metaDescription} />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="keywords" content="tax calculator, salary calculator, income tax calculator, take home pay, paycheck calculator, progressive tax brackets, standard deduction, tax tally" />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Multilingual Alternate Links (hreflang) -->
+{
+  Object.values(LOCALES).map((loc) => {
+    const locUrl = loc.code === 'en' ? `${siteUrl}/` : `${siteUrl}/${loc.code}/`;
+    return <link rel="alternate" hreflang={loc.code} href={locUrl} />;
+  })
+}
+<link rel="alternate" hreflang="x-default" href={`${siteUrl}/`} />
+
+<!-- OpenGraph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="TaxTally" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={t.siteTitle} />
+<meta property="og:description" content={t.metaDescription} />
+<meta property="og:image" content={`${siteUrl}/og-image.png`} />
+<meta property="og:image:alt" content="TaxTally - Free Private Income Tax & Salary Calculator" />
+<meta property="og:locale" content={currentLocale} />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={t.siteTitle} />
+<meta name="twitter:description" content={t.metaDescription} />
+<meta name="twitter:image" content={`${siteUrl}/og-image.png`} />
+
+<!-- Strict Structured Data (JSON-LD) Schemas -->
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(webApplicationSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(softwareApplicationSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

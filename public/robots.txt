@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://taxtally.github.io/sitemap-index.xml

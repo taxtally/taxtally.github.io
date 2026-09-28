@@ -1,0 +1,88 @@
+---
+import SeoHead from '../components/SeoHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FaqSection from '../components/FaqSection.astro';
+import { TRANSLATIONS } from '../i18n/translations';
+import type { SupportedLocale } from '../types/tax';
+import '../styles/global.css';
+
+interface Props {
+  currentLocale?: SupportedLocale;
+}
+
+const { currentLocale = 'en' } = Astro.props;
+const t = TRANSLATIONS[currentLocale] || TRANSLATIONS.en;
+---
+
+<!doctype html>
+<html lang={currentLocale} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VEB8M5XWQG" is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-VEB8M5XWQG');
+    </script>
+    <!-- Inline Theme Check to prevent FOUC (Flash of Unstyled Content) -->
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem('theme');
+          const isDark =
+            stored === 'dark' ||
+            (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (_) {}
+      })();
+    </script>
+
+    <SeoHead currentLocale={currentLocale} />
+  </head>
+  <body class="min-h-screen bg-[#F8FAFC] dark:bg-[#092328] text-[#092328] dark:text-[#F8FAFC] antialiased selection:bg-[#2A835F] selection:text-white transition-colors duration-200">
+    {/* Sticky Navbar */}
+    <Header currentLocale={currentLocale} />
+
+    {/* Hero Section */}
+    <div class="relative overflow-hidden pt-8 pb-4 sm:pt-12 sm:pb-6 text-center px-4">
+      {/* Background radial glow using brand colors */}
+      <div class="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#2A835F]/15 dark:bg-[#12544F]/35 rounded-full blur-3xl" />
+
+      <div class="relative max-w-3xl mx-auto space-y-3">
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-[#092328] dark:text-white">
+          {currentLocale === 'en' ? (
+            <>
+              Smart, Private <span class="bg-gradient-to-r from-[#12544F] via-[#2A835F] to-[#8BBB92] dark:from-[#8BBB92] dark:via-[#2A835F] dark:to-emerald-300 bg-clip-text text-transparent">Tax & Salary</span> Calculator
+            </>
+          ) : (
+            t.siteTitle.split('|')[0]
+          )}
+        </h1>
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          {t.siteTagline}
+        </p>
+      </div>
+    </div>
+
+    {/* Main Calculator Slot */}
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+      <slot />
+    </main>
+
+    {/* SEO FAQ Section */}
+    <FaqSection currentLocale={currentLocale} />
+
+    {/* Footer */}
+    <Footer currentLocale={currentLocale} />
+  </body>
+</html>
